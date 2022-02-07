@@ -1,0 +1,415 @@
+sqlplus system/oracle
+
+SELECT ENAME, UPPER(ENAME), LOWER(ENAME), INITCAP(ENAME)
+FROM EMP;
+
+SQL> spool
+SQL> spool c:\temp\db_02_03.txt
+
+select *
+from emp
+where upper(ename) like upper('scott%');
+
+select *
+from emp
+where upper(ename) = upper('scott');
+
+--ex 6-4
+select ename, length(ename)
+from emp;
+
+--ex 6-5
+select ename, length(ename)
+from emp
+where length(ename) >= 5;
+
+--ex 6-6
+select length('한글'), lengthb('한글')
+from dual;
+
+--ex 6-7
+select job, substr(job, 1, 2), substr(job, 3, 2), substr(job, 5)
+from emp;
+
+--ex 6-8
+select job,
+substr(job, -length(job)),
+substr(job, -length(job), 2),
+substr(job, -3)
+from emp;
+
+-ex 6-9
+SELECT INSTR('HELLO, ORACLE !', 'L')  AS INSTR_1,
+INSTR('HELLO, ORACLE !', 'L', 5)  AS INSTR_2,
+INSTR('HELLO, ORACLE !', 'L', 2, 2)  AS INSTR_3
+FROM DUAL;
+
+--ex 6-10
+select *
+from emp
+where instr(ename, 'S') > 0;
+
+--ex 6-11
+select *
+from emp
+where ename like '%S%';
+
+--ex 6-12
+select '010-1234-5678' as replace_before,
+replace('010-1234-5678', '-', ' ') as replace_1,
+replace('010-1234-5678', '-') as replace_2
+from dual;
+
+--ex 6-13
+select 'Oracle',
+lpad('Oracle', 10, '#') as lpad_1,
+rpad('Oracle', 10, '*') as rpad_1,
+lpad('Oracle', 10) as lpad_2,
+lpad('Oracle', 10) as rpad_2
+from dual;
+
+--ex 6-14
+select
+rpad('971225-', 14, '*') as rpad_jmno,
+rpad('010-1234-', 13, '*') as rpad_phone
+from dual;
+
+--ex 6-15
+select concat(empno, ename),
+concat(empno, concat(' : ', ename))
+from emp
+where ename = 'SCOTT';
+
+select empno || ename,
+empno || ' : ' || ename
+from emp;
+
+--ex 6-16
+select '[' || trim(' _ _Oracle_ _ ') || ']' as trim,
+'[' || trim(leading from ' _ _Oracle_ _ ') || ']' as trim_leading,
+'[' || trim(trailing from ' _ _Oracle_ _ ') || ']' as trim_trailing,
+'[' || trim(both from ' _ _Oracle_ _ ') || ']' as trim_both
+from dual;
+
+--ex 6-17
+select '[' || trim('_' from '_ _Oracle_ _') || ']' as trim,
+'[' || trim(leading '_' from '_ _Oracle_ _') || ']' as trim_leading,
+'[' || trim(trailing '_' from '_ _Oracle_ _') || ']' as trim_trailing,
+'[' || trim(both '_' from '_ _Oracle_ _') || ']' as trim_both
+from dual;
+
+--ex 6-18
+select '[' || trim(' _Oracle_ ') || ']' as trim,
+'[' || ltrim(' _Oracle_ ') || ']' as ltrim,
+'[' || ltrim('<_Oracle_>', '_<') || ']' as ltrim_2,
+'[' || rtrim(' _Oracle_ ') || ']' as rtrim,
+'[' || rtrim('<_Oracle_>', '_>') || ']' as rtrim_2
+from dual;
+
+-ex 6-19
+select round(1234.5678) as round,
+round(1234.5678, 0) as round_0,
+round(1234.5678, 1) as round_1,
+round(1234.5678, 2) as round_2,
+round(1234.5678, -1) as round_minus1,
+round(1234.5678, -2) as round_minus2
+from dual;
+
+-ex 6-24
+select sysdate,
+add_months(sysdate, 3)
+from dual;
+
+--ex 6-25
+select empno, ename, hiredate,
+add_months(hiredate, 120) as work10year
+from emp;
+
+--ex 6-31
+select empno, ename, empno + '500'
+from emp
+where ename = 'SCOTT';
+
+--연습문제 3번
+select empno, ename, hiredate, to_char(add_months(hiredate,3), 'YYYY-MM-DD') as r_job,
+nvl(to_char(comm), 'N/A') as comm
+from emp;
+
+--ex 7-1
+select sum(sal)
+from emp;
+
+--ex 7-2
+select ename,sum(sal)
+from emp;
+
+--ex 7-3
+select sum(comm)
+from emp;
+
+--ex 7-4
+select sum(distinct sal), sum(all sal), sum(sal) from emp;
+
+--ex 7-5
+select count(*)
+from emp;
+
+--ex 7-6
+select count(*)
+from emp
+where deptno = 30;
+
+--ex 7-7
+select count(distinct job),
+count(all job),
+count(job)
+from emp;
+
+--ex 7-8
+select count(comm)
+from emp;
+
+--ex 7-9
+select count(comm)
+from emp
+where comm is not null;
+
+--ex 7-10
+select max(sal)
+from emp
+where deptno = 10;
+
+--ex 7-11
+select min(sal)
+from emp
+where deptno = 10;
+
+--ex 7-12
+select to_char(max(hiredate), 'YYYY-MM-DD') as a
+from emp
+where deptno = 20;
+
+--ex 7-13
+select min(hiredate)
+from emp
+where deptno = 20;
+
+--ex 7-14
+select avg(sal)
+from emp
+where deptno = 30;
+
+--ex 7-15
+select avg(distinct sal)
+from emp
+where deptno = 30;
+
+--ex 7-17
+select avg(sal), deptno
+from emp
+group by deptno;
+
+--ex 7-18
+select job, avg(sal), deptno
+from emp
+group by deptno, job
+order by deptno,avg(sal);
+
+--ex 7-20
+select deptno, job, avg(sal)
+from emp
+group by deptno, job
+having avg(sal) >= 2000
+order by deptno, job;
+--그룹바이의 조건절은 where절이 아닌 having절을 써야 함
+
+--ex 7-23
+--where절은 직계함수를 못쓰기에 둘다쓰면 where절이 먼저 실행된다.
+select deptno, job, avg(sal)
+from emp
+where sal <= 3000
+group by deptno, job
+having avg(sal) >=2000
+order by deptno,job;
+
+select deptno,job,avg(sal)
+from emp
+where sal <= 3000
+group by deptno, job
+order by deptno,job;
+
+--ex 7-24
+select deptno, job, count(*), max(sal), sum(sal), avg(sal)
+from emp
+group by deptno, job
+order by deptno, job;
+
+--ex 7-25
+select deptno, job, count(*), max(sal), sum(sal), avg(sal)
+from emp
+group by rollup(deptno, job);
+
+--ex 7-26
+select deptno, job, count(*), max(sal), sum(sal), avg(sal)
+from emp
+group by cube(deptno, job)
+order by deptno, job;
+
+--ex 7-27
+select deptno, job, count(*)
+from emp
+group by deptno, rollup(job);
+
+--ex 7-28
+select deptno,job, count(*)
+from emp
+group by job, rollup(deptno);
+
+--ex 7-29
+select deptno, job, count(*)
+from emp
+group by grouping sets(deptno,job)
+order by deptno, job;
+
+-- ex 7-30
+select deptno, job, count(*), max(sal), sum(sal), avg(sal), grouping(deptno), grouping(job)
+from emp
+group by cube(deptno, job)
+order by deptno, job;
+
+--ex 7-34
+select deptno, listagg(ename, ', ')
+within group(order by sal desc) as enames
+from emp
+group by deptno;
+
+--ex 7-35
+select deptno, job, max(sal)
+from emp
+group by deptno, job
+order by deptno, job;
+
+--ex 7-36
+select *
+from(select deptno, job, sal 
+ from emp)
+pivot(max(sal)
+ for deptno in (10, 20, 30) )
+order by job;
+--기존 테이블 행을 열로 가져온다.
+
+--ex 7-37
+SELECT *
+FROM(SELECT DEPTNO,
+MAX(DECODE(JOB, 'CLERK'      , SAL)) AS "CLERK",
+MAX(DECODE(JOB, 'SALESMAN', SAL)) AS "SALESMAN",
+MAX(DECODE(JOB, 'PRESIDENT', SAL)) AS "PRESIDENT",
+MAX(DECODE(JOB, 'MANAGER', SAL)) AS "MANAGER",
+MAX(DECODE(JOB, 'ANALYST' , SAL)) AS "ANALYST"
+FROM EMP
+GROUP BY DEPTNO
+ORDER BY DEPTNO)
+UNPIVOT(
+SAL FOR JOB IN (CLERK, SALESMAN, PRESIDENT, MANAGER, ANALYST))
+ORDER BY DEPTNO, JOB;
+
+--연습문제 1번
+select *
+from(select deptno,
+ trunc(avg(sal))as avg_sal,
+ max(sal) as max_sal,
+ min(sal) as min_sal,
+ count(*) as cnt
+from emp
+group by deptno
+order by deptno desc);
+
+--연습문제 2번
+select *
+from(select job, count(*)
+ from emp
+ group by job
+ having count(*) >= 3);
+
+--연습문제 5번
+select *
+from(select deptno,
+ to_char(hiredate, 'YYYY') as hire_date,
+ count(*) as cnt, max(sal) as max_sal,
+ sum(sal) as sum_sal, 
+ avg(sal) as avg_sal
+from emp
+group by rollup(deptno, to_char(hiredate, 'YYYY')) );
+
+--JONES와 같은 부서에 근무하는 사원들의 부서번호, 사원번호, 이름, 급여를 구하여라.
+--서브쿼리 이용
+select deptno, empno, ename, sal
+from emp
+where deptno = (
+select deptno
+from emp
+where ename = 'JONES');
+
+--JONES와 같은 직무를 가진 사원들의 이름과 직무를 구하여라.
+select ename, job
+from emp
+where job = (
+select job
+from emp
+where ename = 'JONES');
+
+--CLARK보다 급여를 많이 받는 사원의 이름과 직무를 구하여라.
+select ename, job
+from emp
+where sal > (
+select sal
+from emp
+where ename = 'CLARK'); 
+
+--사원 전체의 평균 급여보다 급여가 적은 사원들의 이름과 급여를 구하여라.
+select ename, sal
+from emp
+where sal < (
+select avg(sal)
+from emp);
+
+--emp 테이블에서 부서별로 평균급여가 부서번호 30인 사원들의 평균급여보다 큰 부서의 부서번호와 평균 급여를 구하여라.
+select avg(sal), deptno
+from emp
+group by deptno
+having avg(sal) > (
+select avg(sal)
+from emp
+where deptno = 30);
+
+--in연산자
+--부서별로 제일 먼저 나오는 사원이름을 출력
+select ename, sal, deptno
+from emp
+where ename in (
+select min(ename)
+from emp
+group by deptno) ;
+--equal연산자는 단일행 연산자이기에 복수행 서브쿼리 연산자에는 in을 쓴다.
+
+--any 연산자 각각의 값과 비교하여 하나라도 만족되면 결과에 포함
+--부서번호가 30번인 사원들의 급여 중 가장 낮은 값보다 높은 급여를 받는 사원의 이름, 급여를 구하세요
+--최소값보다 더큰거 : > any
+--최대값보다 작은거 : < any
+select ename, sal
+from emp
+where sal > any(
+select sal
+from emp
+where deptno = 30);
+
+--all연산자 반환하는 모든 값과 비교
+--부서번호가 30번인 사원들의 급여 중 가장 높은 값보다 더 많은 급여를 받는 사원의 이름, 급여를 구하세요.
+--최소값보다 작은거 : <all
+--최대값보다 더큰거 : >all
+select ename, sal
+from emp
+where sal > all(
+select sal
+from emp
+where deptno = 30);

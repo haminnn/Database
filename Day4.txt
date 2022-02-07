@@ -1,0 +1,306 @@
+--ex 9-11
+select *
+from emp
+where sal < any (select sal
+from emp
+where deptno = 30)
+order by sal, empno;
+
+--ex9-14
+select *
+from emp
+where sal < all (
+select sal
+from emp
+where deptno = 30);
+
+--ex9-15
+select *
+from emp
+where sal > all (
+select sal
+from emp
+where deptno = 30);
+
+--ex 9-16
+select *
+from emp
+where exists (
+select dname
+from dept
+where deptno = 10);
+
+select *
+from dept
+where deptno = (
+select deptno
+from emp
+where ename = 'JONES');
+
+--ex 9-19
+select e10.empno, e10.ename, e10.deptno, d.dname, d.loc
+from (
+select *
+from emp
+where deptno = 10) e10, (select * from dept) d
+where e10.deptno = d.deptno;
+
+--ex 9-21
+select empno, ename, job, sal, (
+select grade
+from salgrade
+where e.sal between losal and hisal) as salgrade, deptno, (
+select dname from dept
+where e.deptno = dept.deptno) as dname
+from emp e;
+
+--9장 연습문제 2번
+select avg(sal)
+
+--9장 연습문제 3번
+select e.empno, e.ename, e.job, d.deptno, d.dname, d.loc
+from dept d, emp e
+where d.deptno = e.deptno
+and e.deptno = 10
+and job not in
+(select job
+from emp
+where deptno = 30);
+
+-- ex 8-1
+select *
+from emp, dept
+order by empno;
+
+--ex 8-2
+select *
+from emp, dept
+where emp.deptno = dept.deptno
+order by empno;
+
+--ex 8-3
+select *
+from emp e, dept d
+where e.deptno = d.deptno
+order by empno;
+
+--scott의 부서와 같은 부서 번호를 갖는 사원의 이름, 부서번호, 부서이름을 구하세요.
+select emp.ename, emp.deptno, dept.dname
+from emp, dept
+where emp.deptno = dept.deptno
+and emp.deptno = (
+select deptno
+from emp
+where ename = 'SCOTT');
+
+--Q1) 이름이 'ALLEN'인 사원의 부서 이름을 출력하여라.
+
+select d.dname
+from emp e, dept d
+where ename = 'ALLEN' and
+e.deptno = d.deptno ;
+
+--Q2) 직무가 'ANALYST'인 어떤 사원보다 급여가 적으면서,
+--     직무가 'ANALYST'가 아닌 사원들의 사원번호, 이름, 직무, 급여를 출력하여라.
+
+select empno, ename, job, sal
+from emp
+where job not in ('ANALYST') and sal < all(
+select sal
+from emp
+where job = 'ANALYST');
+
+--Q3) 부서이름이 'SALES'인 사원들의 평균 급여보다 급여가 많고,
+--     부서 이름이 'RESEARCH'인 사원들의 평균 급여보다 급여가 적은 사원들의 이름, 부서번호, 급여, 직무를 출력하여라.
+
+select e.ename, d.deptno, e.sal, e.job
+from emp e, dept d
+where e.deptno = d.deptno
+and sal > (
+ select avg(sal) 
+ from emp e, dept d
+ where e.deptno = d.deptno
+ and d.dname = 'SALES')
+and sal < (
+ select avg(sal) 
+ from emp e, dept d
+ where e.deptno = d.deptno
+ and d.dname = 'RESEARCH');
+
+
+--Q4) 'FORD'와 부서가 같은 사원들의 이름, 부서 이름, 직무, 급여를 출력하여라.
+
+select e.ename, e.deptno, e.job, e.sal
+from emp e, dept d
+where e.deptno = d.deptno 
+and d.dname in (
+select dname
+from emp e, dept d
+where e.deptno = d.deptno
+and ename = 'FORD');
+
+--Q5) 각 부서별 부서 번호(모든 부서에 대해서), 부서 이름, 부서 위치, 사원의 수를 출력하여라.
+
+--기존
+select d.deptno, d.dname, d.loc, count(e.ename)
+from dept d, emp e
+where e.deptno(+) = d.deptno
+group by d.deptno, d.dname, d.loc
+order by d.deptno;
+--SQL-99방식
+select d.deptno, d.dname, d.loc, count(e.ename)
+from emp e right outer join dept d
+on e.deptno = d.deptno
+group by d.deptno, d.dname, d.loc
+order by d.deptno;
+
+--Q6) 전체 사원의 평균 급여보다 급여가 많은 사원의 사원 번호, 이름, 부서 이름, 입사일, 부서 위치, 급여를 출력하여라.
+
+select empno, ename, dname, hiredate, loc, sal
+from emp, dept
+where emp.deptno = dept.deptno
+and sal > (
+select avg(sal)
+from emp);
+
+--ex 10-1
+create table dept_temp
+ as select * from dept;
+
+--table 삭제
+--drop table 테이블이름; 
+--drop table 테이블 이름 cascade constraints; 이렇게 하면 부모 테이블이여도 삭제된다.
+drop table dept;
+
+--ex 10-3
+insert into dept_temp(deptno, dname, loc)
+values(50, 'DATABASE', 'SEOUL');
+
+select *
+from dept_temp;
+
+--undo : rollback; DML만 undo할 수 있다. DDL은 자동커밋이기때문에 할 수 없다.
+--ctrl +z 처럼 방금 넣은 데이터가 사라진다.
+
+--ex 10-5
+insert into dept_temp (deptno, dname, loc)
+values(70, 'WEB', NULL);
+
+-- ex 10-6
+insert into dept_temp(deptno, dname, loc)
+values(80, 'MOBILE', '');
+
+--ex 10-7
+insert into dept_temp(deptno,loc)
+values(90, 'INCHEON');
+
+--ex 10-8
+create table emp_temp
+as select *
+from emp
+where 1 <> 1;
+
+select *
+from emp_temp;
+
+--ex 10-12
+insert into emp_temp(empno, ename, job, mgr, hiredate, sal, comm, deptno)
+values(2111, '이순신', 'MANAGER', 9999, TO_DATE('07/01/2001', 'DD/MM/YYYY'), 4000, NULL, 20);
+
+--ex 10-13
+insert into emp_temp
+values(3111, '심청이', 'MANAGER', 9999, SYSDATE, 4000, NULL, 30);
+
+--ex 10-14
+insert into emp_temp (empno, ename, job, mgr, hiredate, sal, comm, deptno)
+select e.empno, e.ename, e.job, e.mgr, e.hiredate, e.sal, e.comm, e.deptno
+from emp e, salgrade s
+where e.sal between s.losal and s.hisal
+and s.grade = 1;
+
+--ex 10-15
+create table dept_temp2
+as select *
+from dept;
+
+select *
+from dept_temp2;
+
+--ex 10-18
+update dept_temp2
+set dname = 'DATABASE',
+loc = 'SEOUL'
+where deptno = 40;
+
+select *
+from dept_temp2;
+
+--ex 10-19
+update dept_temp2
+set(dname, loc) = (select dname, loc from dept where deptno = 40)
+where deptno = 40;
+
+select *
+from dept_temp2;
+
+--ex 10-21
+update dept_temp2
+set loc = 'SEOUL'
+where deptno = (select deptno from dept_temp2 where dname = 'OPERATIONS');
+
+select *
+from dept_temp2;
+
+--ex 10-22 emp테이블을 복사해서 emp_temp2테이블 만들기
+create table emp_temp2
+as select *
+from emp;
+
+--ex 10-23 where절을 사용하여 데이터 일부 삭제
+delete from emp_temp2
+where job = 'MANAGER';
+
+--ex 10-24 서브쿼리 이용하여 데이터 일부 삭제
+delete from emp_temp2
+where empno in (
+select e.empno
+from emp_temp2 e, salgrade s
+where e.sal between s.losal and s.hisal
+and s.grade =3
+and deptno = 30);
+
+--ex 10-25 테이블에 있는 전체 데이터 삭제하기
+delete from emp_temp2
+
+create table chap10hw_emp as
+ select *
+ from emp;
+
+create table chap10hw_dept as
+select *
+from dept;
+
+create table chap10hw_salgrade as
+select *
+from salgrade;
+
+--10장 3번
+--20번부서에서 근무하는 사원들의 평균급여보다 많은 급여를 받고 있는 사원들을 30번 부서로 옮기는 SQL문
+
+update chap10hw_emp
+set deptno = 30
+where sal > (
+select avg(sal)
+from chap10hw_emp e, chap10hw_dept d
+where e.deptno = d.deptno
+and e.deptno = 20);
+
+--10장 4번
+--30번 부서의 사원중에 입사일이 가장 빠른 사원보다 늦게 입사한 사원의 급여를 10% 인상하고 20번부서로 옮기는 SQL문
+
+update chap10hw_emp
+set sal = sal *1.1, deptno = 20
+where hiredate > (
+select min(hiredate)
+from chap10hw_emp e
+where e.deptno = 30 );

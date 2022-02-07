@@ -1,0 +1,253 @@
+spool c:\temp\db_02_07
+--ex 12-1
+create table emp_ddl(
+empno number(4),
+ename varchar2(10),
+job varchar2(9),
+mgr number(4),
+hiredate date,
+sal number(7,2),
+comm number(7,2),
+deptno number(2) );
+
+--ex 12-2
+create table dept_ddl
+as select * from dept;
+
+--ex 12-4
+create table emp_ddl_30
+as select *
+from emp
+where deptno = 30;
+
+select *
+from emp_ddl_30;
+
+--ex 12-6
+create table emp_alter
+as select *
+from emp;
+
+select *
+from emp_alter;
+
+--ex 12-7
+alter table emp_alter
+add hp varchar2(20);
+
+select *
+from emp_alter;
+
+--ex 12-8
+alter table emp_alter
+rename column hp to tel;
+
+select *
+from emp_alter;
+
+--ex 12-9;
+alter table emp_alter
+modify empno number(5);
+
+--ex 12-10
+alter table emp_alter
+drop column tel;
+
+desc emp_alter;
+
+--ex 12-11
+rename emp_alter to emp_rename;
+
+--ex 12-14
+--데이터 삭제 delete(DML : rollback 가능), truncate(DDL : rollback 불가)
+truncate table emp_rename;
+--delete를 쓰는 게 좋다.
+delete from emp_rename;
+
+--ex 12-15
+drop table emp_rename;
+
+--ex 13-1
+select *
+from dict;
+
+--ex 13-2
+select *
+from dictionary;
+
+--ex 13-3
+select table_name
+from user_tables;
+
+--ex 13-4
+select owner, table_name
+from all_tables;
+
+--ex 13-5
+select *
+from dba_tables;
+
+--ex 13-6
+select *
+from dba_tables;
+
+--ex 13-7
+select *
+from DBA_USERS
+where username = 'SCOTT';
+
+--인덱스 카피 테이블 만들기
+create table emp_copy
+as select *
+from emp;
+
+--타이머 설정할 때
+set timing on
+--타이밍 확인
+show timing
+--타이머 끌 때
+set timing off
+
+select ename
+from emp_copy;
+
+insert into emp_copy
+select *
+from emp;
+
+----비고유 index 생성할 때----
+--create index 이름
+--on 테이블이름(필드명);
+
+
+create index emp_copy_index
+on emp_copy(ename);
+
+--특정인덱스 살펴보기
+select index_name, table_name
+from user_ind_columns
+where table_name in ('EMP_COPY');
+
+----고유 index 생성할 때----
+--create unique index 이름
+--on 테이블이름(필드명);
+
+create unique index emp_copy_job_index
+on emp_copy(job);
+--컬럼이 중복되는 값이 있는경우에 ORA-01452: cannot CREATE UNIQUE INDEX; duplicate keys found 라고 뜬다. 고유인덱스 생성불가
+
+--ex 13-12
+drop index emp_copy_index;
+
+--------------------view------------------
+--ex 13-15
+create view vw_emp20
+as (select empno, ename, job, deptno
+from emp
+where deptno = 20);
+--결과
+--ERROR at line 1:
+--ORA-01031: insufficient privileges
+--뷰는 일반 사용자가 권한이 없기 떄문에 DBA가 권한을 주어야 함
+
+--view 생성 권한 부여(DCL)
+--sys에서 작업
+grant create view to scott;
+
+--권한 회수
+revoke create view from scott;
+
+--scott에서 작업
+select empno,ename,deptno
+from emp_copy
+where deptno = 30;
+
+--------뷰 생성---------
+--create view 뷰이름
+--as
+--select ~~~~~
+
+create view emp_view_dept30
+as
+select empno,ename,deptno
+from emp_copy
+where deptno = 30;
+
+--view 확인
+select *
+from emp_view_dept30;
+
+desc emp_view_dept30;
+
+--view 데이터사전 확인
+desc user_views;
+
+select view_name, text, read_only
+from user_views
+where view_name in ('EMP_VIEW_DEPT30');
+
+--view의 내용을 변경하면 base table의 내용도 변경된다.
+insert into emp_view_dept30
+values(1111, 'park', 30);
+--마찬가지로 base table이 바뀌면 view의 내용도 바뀐다.
+insert into emp_copy
+values(1111, 'CHOI', 'CLERK', 1234, '82/11/22', 1000, 0, 30);
+select *
+from emp_view_dept30;
+
+--
+create view emp_view_dept
+as
+select empno, ename, sal, e.deptno, dname, loc
+from emp e, dept d
+where e.deptno = d.deptno;
+
+--뷰삭제
+--drop view 뷰이름;
+drop view emp_view_dept30;
+
+--or replace : 뷰를 변경하거나 생성(있으면 replace 없으면 create)
+create or replace view emp_view_dept30
+as
+select empno, sal, comm
+from emp_copy
+where deptno = 30;
+
+--with check option : 해당 필드만 변경 불가능(where 절의 필드)
+create view view_chk30
+as
+select empno, ename, sal, deptno
+from emp_copy
+where deptno = 30
+with check option;
+
+update view_chk30
+set deptno = 20
+where sal > 1300;
+ERROR at line 1:
+ORA-01402: view WITH CHECK OPTION where-clause violation
+
+update view_chk30
+set sal = sal *1.2
+where sal > 1300;
+
+update view_chk30
+set sal = 1000;
+
+--with read only
+--읽기 전용으로 만들 때
+create view view_read30
+as
+select empno, ename, sal, comm, deptno
+from emp_copy
+where deptno = 30
+with read only;
+
+update view_read30
+set sal = sal*1.2;
+--결과
+ERROR at line 2:
+ORA-42399: cannot perform a DML operation on a read-only view
+
+--뷰 삭제
+drop view view_read30;

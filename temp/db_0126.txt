@@ -1,0 +1,985 @@
+SQL> show spool
+spool ON
+SQL> create table point1
+  2  (no number,
+  3   name varchar2(10));
+
+Table created.
+
+SQL> create table point2
+  2  (no number constraint pk_no primary key,
+  3   name varchar2(10));
+
+Table created.
+
+SQL> desc point1;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ NO                                                 NUMBER
+ NAME                                               VARCHAR2(10)
+
+SQL> desc point2;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ NO                                        NOT NULL NUMBER
+ NAME                                               VARCHAR2(10)
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select constraint_name,constraint_type from all_constraints;
+
+CONSTRAINT_NAME                                              CO                 
+------------------------------------------------------------ --                 
+SYS_C00480                                                   C                  
+SYS_C00479                                                   C                  
+SYS_C00478                                                   C                  
+HELP_TOPIC_SEQ                                               P                  
+SYS_C003646                                                  C                  
+SYS_C003645                                                  C                  
+SYS_C00477                                                   C                  
+SYS_C00476                                                   C                  
+SYS_C00475                                                   C                  
+SYS_C00474                                                   C                  
+SYS_C00473                                                   C                  
+
+CONSTRAINT_NAME                                              CO                 
+------------------------------------------------------------ --                 
+SYS_C001461                                                  C                  
+SYS_C001460                                                  C                  
+SYS_C003487                                                  U                  
+SYS_C003486                                                  U                  
+HS_PARALLEL_METADATA_PK                                      P                  
+SYS_C003484                                                  C                  
+SYS_C003483                                                  C                  
+SYS_C003482                                                  C                  
+SYS_C003481                                                  C                  
+SYS_C003480                                                  C                  
+SYS_C003479                                                  C                  
+
+CONSTRAINT_NAME                                              CO                 
+------------------------------------------------------------ --                 
+SYS_C003478                                                  C                  
+DRC$OAT_NAME                                                 U                  
+DRC$OAT_KEY                                                  P                  
+SYS_C003684                                                  U                  
+SYS_C003683                                                  P                  
+SYS_C003682                                                  C                  
+SYS_C003681                                                  C                  
+SYS_C003680                                                  C                  
+SYS_C003679                                                  C                  
+SYS_C003687                                                  R                  
+SYS_C003686                                                  P                  
+
+CONSTRAINT_NAME                                              CO                 
+------------------------------------------------------------ --                 
+SYS_C003685                                                  C                  
+SYS_C003749                                                  V                  
+SYS_C003748                                                  V                  
+SYS_C003746                                                  V                  
+SYS_C003751                                                  V                  
+SYS_C003756                                                  V                  
+SYS_C003750                                                  V                  
+SYS_C003755                                                  V                  
+SYS_C003752                                                  V                  
+SYS_C003753                                                  V                  
+SYS_C003754                                                  V                  
+
+CONSTRAINT_NAME                                              CO                 
+------------------------------------------------------------ --                 
+SYS_C003747                                                  V                  
+SYS_C003764                                                  U                  
+SYS_C003768                                                  U                  
+SYS_C003769                                                  U                  
+SYS_C003778                                                  U                  
+SYS_C003772                                                  U                  
+SYS_C003763                                                  U                  
+SYS_C003759                                                  U                  
+SYS_C003777                                                  U                  
+SYS_C003761                                                  U                  
+SYS_C003767                                                  U                  
+
+CONSTRAINT_NAME                                              CO                 
+------------------------------------------------------------ --                 
+SYS_C003766                                                  U                  
+SYS_C003770                                                  U                  
+SYS_C003771                                                  U                  
+SYS_C003765                                                  U                  
+SYS_C003762                                                  U                  
+SYS_C003760                                                  U                  
+SYS_C003860                                                  P                  
+SYS_C003861                                                  P                  
+SYS_C003859                                                  P                  
+ELLIPSOID_FOREIGN_LEGACY                                     R                  
+UNIT_OF_MEASURE_FOREIGN_UOM                                  R                  
+
+CONSTRAINT_NAME                                              CO                 
+------------------------------------------------------------ --                 
+UNIT_OF_MEASURE_FOREIGN_LEGACY                               R                  
+FACTOR_C_MUST_BE_POS                                         C                  
+FACTOR_B_MUST_BE_POS                                         C                  
+ONLY_STD_TARGET_UOMS                                         C                  
+UOM_TYPE_CONSTR                                              C                  
+UNIT_OF_MEASURE_PRIM                                         P                  
+UOM_UNIQUE1                                                  U                  
+UOM_ID_MUST_BE_POS                                           C                  
+SYS_C003873                                                  C                  
+SYS_C003872                                                  C                  
+SYS_C003871                                                  C                  
+
+CONSTRAINT_NAME                                              CO                 
+------------------------------------------------------------ --                 
+SYS_C004028                                                  P                  
+SYS_C003867                                                  P                  
+COORD_AXIS_FOREIGN_AXIS                                      R                  
+COORD_AXIS_FOREIGN_UOM                                       R                  
+COORD_AXIS_FOREIGN_CS                                        R                  
+COORD_AXIS_PRIM                                              P                  
+COORD_AXIS_NAME_PRIM                                         P                  
+SYS_C003893                                                  U                  
+SYS_C003892                                                  C                  
+COORD_OPERATION_FOREIGN_LEGACY                               R                  
+COORD_OP_NAME_NO_LEGACY_NAME                                 C                  
+
+CONSTRAINT_NAME                                              CO                 
+------------------------------------------------------------ --                 
+COORD_OP_NAME_UNIQUE                                         U                  
+COORD_OPERATION_FOREIGN_METHOD                               R                  
+COORD_OPERATION_FOREIGN_TARGET                               R                  
+COORD_OPERATION_FOREIGN_SOURCE                               R                  
+COORD_OP_PRIM                                                P                  
+COORD_OP_VARIANT_MUST_BE_POS                                 C                  
+COORD_OP_ID_MUST_BE_POS                                      C                  
+SYS_C003909                                                  C                  
+SYS_C003908                                                  C                  
+SYS_C003907                                                  C                  
+COORD_OP_METHOD_PRIM                                         P                  
+
+CONSTRAINT_NAME                                              CO                 
+------------------------------------------------------------ --                 
+IS_IMPL_RV_1_OR_0                                            C                  
+IS_IMPL_FW_1_OR_0                                            C                  
+REVERSE_OP_1_OR_0                                            C                  
+COORD_OP_METHOD_ID_MUST_BE_POS                               C                  
+SYS_C003902                                                  C                  
+SYS_C003901                                                  C                  
+SYS_C003900                                                  C                  
+SYS_C003899                                                  C                  
+COORD_OP_PARA_PRIM                                           P                  
+PARAMETER_ID_MUST_BE_POS                                     C                  
+SYS_C003922                                                  C                  
+
+CONSTRAINT_NAME                                              CO                 
+------------------------------------------------------------ --                 
+COORD_OP_PARA_USE_FOREIGN_PARA                               R                  
+COORD_OP_PARA_USE_FOREIGN_METH                               R                  
+COORD_OP_PARA_USE_PRIM                                       P                  
+COORD_OP_PARA_VAL_FOREIGN_UOM                                R                  
+COORD_OP_PARA_VAL_FOREIGN_PARA                               R                  
+COORD_OP_PARA_VAL_FOREIGN_METH                               R                  
+COORD_OP_PARA_VAL_FOREIGN_OP                                 R                  
+COORD_OP_PARA_VAL_PRIM                                       P                  
+COORD_OP_PATH_FOREIGN_TARGET                                 R                  
+COORD_OP_PATH_FOREIGN_SOURCE                                 R                  
+OP_PATH_STEP_MUST_BE_POS                                     C                  
+
+CONSTRAINT_NAME                                              CO                 
+------------------------------------------------------------ --                 
+CONCAT_OP_ID_MUST_BE_POS                                     C                  
+SYS_C003919                                                  C                  
+COORD_REF_SYS_FOREIGN_VERT                                   R                  
+COORD_REF_SYS_FOREIGN_HORIZ                                  R                  
+COORD_REF_SYS_FOREIGN_GEOG                                   R                  
+COORD_REF_SYS_FOREIGN_LEGACY                                 R                  
+COORD_REF_SYS_FOREIGN_PROJ                                   R                  
+COORD_REF_SYS_FOREIGN_DATUM                                  R                  
+COORD_REF_SYS_FOREIGN_CS                                     R                  
+CRS_CHECK_VERTICAL                                           C                  
+CRS_CHECK_PROJECTED                                          C                  
+
+CONSTRAINT_NAME                                              CO                 
+------------------------------------------------------------ --                 
+CRS_CHECK_GEOGRAPHIC3D                                       C                  
+CRS_CHECK_GEOGRAPHIC2D                                       C                  
+CRS_CHECK_GEOCENTRIC                                         C                  
+CRS_CHECK_ENGINEERING                                        C                  
+CRS_CHECK_COMPOUND                                           C                  
+COORD_REF_SYSTEM_PRIM                                        P                  
+SRID_MUST_BE_POS                                             C                  
+SYS_C003897                                                  C                  
+SYS_C003896                                                  C                  
+SYS_C003895                                                  C                  
+SYS_C003894                                                  C                  
+
+CONSTRAINT_NAME                                              CO                 
+------------------------------------------------------------ --                 
+COORDINATE_SYSTEM_PRIM                                       P                  
+SYS_C003891                                                  U                  
+COORD_SYS_ID_MUST_BE_POS                                     C                  
+SYS_C003889                                                  C                  
+SYS_C003888                                                  C                  
+SYS_C003925                                                  P                  
+SYS_C003924                                                  C                  
+DATUM_FOREIGN_LEGACY                                         R                  
+DATUM_FOREIGN_MERIDIAN                                       R                  
+DATUM_FOREIGN_ELLIPSOID                                      R                  
+DATUM_PRIM                                                   P                  
+
+CONSTRAINT_NAME                                              CO                 
+------------------------------------------------------------ --                 
+DATUM_ID_MUST_BE_POS                                         C                  
+SYS_C003886                                                  C                  
+SYS_C003885                                                  C                  
+SYS_C003884                                                  C                  
+ELLIPSOID_FOREIGN_UOM                                        R                  
+ELLIPSOID_PRIM                                               P                  
+SEMI_MAJOR_AXIS_MUST_BE_POS                                  C                  
+ELLIPSOID_ID_MUST_BE_POS                                     C                  
+SYS_C003881                                                  C                  
+SYS_C003880                                                  C                  
+SYS_C003879                                                  C                  
+
+CONSTRAINT_NAME                                              CO                 
+------------------------------------------------------------ --                 
+PREFERRED_OPS_SYS_PRIM                                       P                  
+SYS_C003914                                                  C                  
+SYS_C003913                                                  C                  
+SYS_C003912                                                  C                  
+PREFERRED_OPS_USE_PRIM                                       P                  
+SYS_C003918                                                  C                  
+SYS_C003917                                                  C                  
+SYS_C003916                                                  C                  
+SYS_C003915                                                  C                  
+PRIME_MERIDIAN_FOREIGN_UOM                                   R                  
+PRIME_MERIDIAN_PRIM                                          P                  
+
+CONSTRAINT_NAME                                              CO                 
+------------------------------------------------------------ --                 
+SYS_C003878                                                  U                  
+PRIME_MERIDIAN_ID_MUST_BE_POS                                C                  
+SYS_C003876                                                  C                  
+SYS_C003875                                                  C                  
+NTV2_XML_DATA_PK                                             P                  
+SYS_C003928                                                  F                  
+SYS_C003927                                                  C                  
+SYS_C003926                                                  C                  
+FK_SRID                                                      R                  
+PK_SRID                                                      P                  
+BIN$sEV+5PyARmOgtmzTDcaw+g==$0                               P                  
+
+CONSTRAINT_NAME                                              CO                 
+------------------------------------------------------------ --                 
+PK_DEPT                                                      P                  
+PK_EMP                                                       P                  
+FK_DEPT                                                      R                  
+PK_NO                                                        P                  
+
+191 rows selected.
+
+SQL> 
+SQL> select constraint_name,constraint_type from all_constraints;
+
+CONSTRAINT_NAME                                              CO                 
+------------------------------------------------------------ --                 
+SYS_C00480                                                   C                  
+SYS_C00479                                                   C                  
+SYS_C00478                                                   C                  
+HELP_TOPIC_SEQ                                               P                  
+SYS_C003646                                                  C                  
+SYS_C003645                                                  C                  
+SYS_C00477                                                   C                  
+SYS_C00476                                                   C                  
+SYS_C00475                                                   C                  
+SYS_C00474                                                   C                  
+SYS_C00473                                                   C                  
+
+CONSTRAINT_NAME                                              CO                 
+------------------------------------------------------------ --                 
+SYS_C001461                                                  C                  
+SYS_C001460                                                  C                  
+SYS_C003487                                                  U                  
+SYS_C003486                                                  U                  
+HS_PARALLEL_METADATA_PK                                      P                  
+SYS_C003484                                                  C                  
+SYS_C003483                                                  C                  
+SYS_C003482                                                  C                  
+SYS_C003481                                                  C                  
+SYS_C003480                                                  C                  
+SYS_C003479                                                  C                  
+
+CONSTRAINT_NAME                                              CO                 
+------------------------------------------------------------ --                 
+SYS_C003478                                                  C                  
+DRC$OAT_NAME                                                 U                  
+DRC$OAT_KEY                                                  P                  
+SYS_C003684                                                  U                  
+SYS_C003683                                                  P                  
+SYS_C003682                                                  C                  
+SYS_C003681                                                  C                  
+SYS_C003680                                                  C                  
+SYS_C003679                                                  C                  
+SYS_C003687                                                  R                  
+SYS_C003686                                                  P                  
+
+CONSTRAINT_NAME                                              CO                 
+------------------------------------------------------------ --                 
+SYS_C003685                                                  C                  
+SYS_C003749                                                  V                  
+SYS_C003748                                                  V                  
+SYS_C003746                                                  V                  
+SYS_C003751                                                  V                  
+SYS_C003756                                                  V                  
+SYS_C003750                                                  V                  
+SYS_C003755                                                  V                  
+SYS_C003752                                                  V                  
+SYS_C003753                                                  V                  
+SYS_C003754                                                  V                  
+
+CONSTRAINT_NAME                                              CO                 
+------------------------------------------------------------ --                 
+SYS_C003747                                                  V                  
+SYS_C003764                                                  U                  
+SYS_C003768                                                  U                  
+SYS_C003769                                                  U                  
+SYS_C003778                                                  U                  
+SYS_C003772                                                  U                  
+SYS_C003763                                                  U                  
+SYS_C003759                                                  U                  
+SYS_C003777                                                  U                  
+SYS_C003761                                                  U                  
+SYS_C003767                                                  U                  
+
+CONSTRAINT_NAME                                              CO                 
+------------------------------------------------------------ --                 
+SYS_C003766                                                  U                  
+SYS_C003770                                                  U                  
+SYS_C003771                                                  U                  
+SYS_C003765                                                  U                  
+SYS_C003762                                                  U                  
+SYS_C003760                                                  U                  
+SYS_C003860                                                  P                  
+SYS_C003861                                                  P                  
+SYS_C003859                                                  P                  
+ELLIPSOID_FOREIGN_LEGACY                                     R                  
+UNIT_OF_MEASURE_FOREIGN_UOM                                  R                  
+
+CONSTRAINT_NAME                                              CO                 
+------------------------------------------------------------ --                 
+UNIT_OF_MEASURE_FOREIGN_LEGACY                               R                  
+FACTOR_C_MUST_BE_POS                                         C                  
+FACTOR_B_MUST_BE_POS                                         C                  
+ONLY_STD_TARGET_UOMS                                         C                  
+UOM_TYPE_CONSTR                                              C                  
+UNIT_OF_MEASURE_PRIM                                         P                  
+UOM_UNIQUE1                                                  U                  
+UOM_ID_MUST_BE_POS                                           C                  
+SYS_C003873                                                  C                  
+SYS_C003872                                                  C                  
+SYS_C003871                                                  C                  
+
+CONSTRAINT_NAME                                              CO                 
+------------------------------------------------------------ --                 
+SYS_C004028                                                  P                  
+SYS_C003867                                                  P                  
+COORD_AXIS_FOREIGN_AXIS                                      R                  
+COORD_AXIS_FOREIGN_UOM                                       R                  
+COORD_AXIS_FOREIGN_CS                                        R                  
+COORD_AXIS_PRIM                                              P                  
+COORD_AXIS_NAME_PRIM                                         P                  
+SYS_C003893                                                  U                  
+SYS_C003892                                                  C                  
+COORD_OPERATION_FOREIGN_LEGACY                               R                  
+COORD_OP_NAME_NO_LEGACY_NAME                                 C                  
+
+CONSTRAINT_NAME                                              CO                 
+------------------------------------------------------------ --                 
+COORD_OP_NAME_UNIQUE                                         U                  
+COORD_OPERATION_FOREIGN_METHOD                               R                  
+COORD_OPERATION_FOREIGN_TARGET                               R                  
+COORD_OPERATION_FOREIGN_SOURCE                               R                  
+COORD_OP_PRIM                                                P                  
+COORD_OP_VARIANT_MUST_BE_POS                                 C                  
+COORD_OP_ID_MUST_BE_POS                                      C                  
+SYS_C003909                                                  C                  
+SYS_C003908                                                  C                  
+SYS_C003907                                                  C                  
+COORD_OP_METHOD_PRIM                                         P                  
+
+CONSTRAINT_NAME                                              CO                 
+------------------------------------------------------------ --                 
+IS_IMPL_RV_1_OR_0                                            C                  
+IS_IMPL_FW_1_OR_0                                            C                  
+REVERSE_OP_1_OR_0                                            C                  
+COORD_OP_METHOD_ID_MUST_BE_POS                               C                  
+SYS_C003902                                                  C                  
+SYS_C003901                                                  C                  
+SYS_C003900                                                  C                  
+SYS_C003899                                                  C                  
+COORD_OP_PARA_PRIM                                           P                  
+PARAMETER_ID_MUST_BE_POS                                     C                  
+SYS_C003922                                                  C                  
+
+CONSTRAINT_NAME                                              CO                 
+------------------------------------------------------------ --                 
+COORD_OP_PARA_USE_FOREIGN_PARA                               R                  
+COORD_OP_PARA_USE_FOREIGN_METH                               R                  
+COORD_OP_PARA_USE_PRIM                                       P                  
+COORD_OP_PARA_VAL_FOREIGN_UOM                                R                  
+COORD_OP_PARA_VAL_FOREIGN_PARA                               R                  
+COORD_OP_PARA_VAL_FOREIGN_METH                               R                  
+COORD_OP_PARA_VAL_FOREIGN_OP                                 R                  
+COORD_OP_PARA_VAL_PRIM                                       P                  
+COORD_OP_PATH_FOREIGN_TARGET                                 R                  
+COORD_OP_PATH_FOREIGN_SOURCE                                 R                  
+OP_PATH_STEP_MUST_BE_POS                                     C                  
+
+CONSTRAINT_NAME                                              CO                 
+------------------------------------------------------------ --                 
+CONCAT_OP_ID_MUST_BE_POS                                     C                  
+SYS_C003919                                                  C                  
+COORD_REF_SYS_FOREIGN_VERT                                   R                  
+COORD_REF_SYS_FOREIGN_HORIZ                                  R                  
+COORD_REF_SYS_FOREIGN_GEOG                                   R                  
+COORD_REF_SYS_FOREIGN_LEGACY                                 R                  
+COORD_REF_SYS_FOREIGN_PROJ                                   R                  
+COORD_REF_SYS_FOREIGN_DATUM                                  R                  
+COORD_REF_SYS_FOREIGN_CS                                     R                  
+CRS_CHECK_VERTICAL                                           C                  
+CRS_CHECK_PROJECTED                                          C                  
+
+CONSTRAINT_NAME                                              CO                 
+------------------------------------------------------------ --                 
+CRS_CHECK_GEOGRAPHIC3D                                       C                  
+CRS_CHECK_GEOGRAPHIC2D                                       C                  
+CRS_CHECK_GEOCENTRIC                                         C                  
+CRS_CHECK_ENGINEERING                                        C                  
+CRS_CHECK_COMPOUND                                           C                  
+COORD_REF_SYSTEM_PRIM                                        P                  
+SRID_MUST_BE_POS                                             C                  
+SYS_C003897                                                  C                  
+SYS_C003896                                                  C                  
+SYS_C003895                                                  C                  
+SYS_C003894                                                  C                  
+
+CONSTRAINT_NAME                                              CO                 
+------------------------------------------------------------ --                 
+COORDINATE_SYSTEM_PRIM                                       P                  
+SYS_C003891                                                  U                  
+COORD_SYS_ID_MUST_BE_POS                                     C                  
+SYS_C003889                                                  C                  
+SYS_C003888                                                  C                  
+SYS_C003925                                                  P                  
+SYS_C003924                                                  C                  
+DATUM_FOREIGN_LEGACY                                         R                  
+DATUM_FOREIGN_MERIDIAN                                       R                  
+DATUM_FOREIGN_ELLIPSOID                                      R                  
+DATUM_PRIM                                                   P                  
+
+CONSTRAINT_NAME                                              CO                 
+------------------------------------------------------------ --                 
+DATUM_ID_MUST_BE_POS                                         C                  
+SYS_C003886                                                  C                  
+SYS_C003885                                                  C                  
+SYS_C003884                                                  C                  
+ELLIPSOID_FOREIGN_UOM                                        R                  
+ELLIPSOID_PRIM                                               P                  
+SEMI_MAJOR_AXIS_MUST_BE_POS                                  C                  
+ELLIPSOID_ID_MUST_BE_POS                                     C                  
+SYS_C003881                                                  C                  
+SYS_C003880                                                  C                  
+SYS_C003879                                                  C                  
+
+CONSTRAINT_NAME                                              CO                 
+------------------------------------------------------------ --                 
+PREFERRED_OPS_SYS_PRIM                                       P                  
+SYS_C003914                                                  C                  
+SYS_C003913                                                  C                  
+SYS_C003912                                                  C                  
+PREFERRED_OPS_USE_PRIM                                       P                  
+SYS_C003918                                                  C                  
+SYS_C003917                                                  C                  
+SYS_C003916                                                  C                  
+SYS_C003915                                                  C                  
+PRIME_MERIDIAN_FOREIGN_UOM                                   R                  
+PRIME_MERIDIAN_PRIM                                          P                  
+
+CONSTRAINT_NAME                                              CO                 
+------------------------------------------------------------ --                 
+SYS_C003878                                                  U                  
+PRIME_MERIDIAN_ID_MUST_BE_POS                                C                  
+SYS_C003876                                                  C                  
+SYS_C003875                                                  C                  
+NTV2_XML_DATA_PK                                             P                  
+SYS_C003928                                                  F                  
+SYS_C003927                                                  C                  
+SYS_C003926                                                  C                  
+FK_SRID                                                      R                  
+PK_SRID                                                      P                  
+BIN$sEV+5PyARmOgtmzTDcaw+g==$0                               P                  
+
+CONSTRAINT_NAME                                              CO                 
+------------------------------------------------------------ --                 
+PK_DEPT                                                      P                  
+PK_EMP                                                       P                  
+FK_DEPT                                                      R                  
+PK_NO                                                        P                  
+
+191 rows selected.
+
+SQL> select constraint_name,constraint_type from all_constraints
+  2  where table_name in ('DEPT', 'EMP');
+
+CONSTRAINT_NAME                                              CO                 
+------------------------------------------------------------ --                 
+FK_DEPT                                                      R                  
+PK_EMP                                                       P                  
+PK_DEPT                                                      P                  
+
+SQL> select constraint_name,constraint_type from all_constraints
+  2  where table_name in ('point1', 'point2');
+
+no rows selected
+
+SQL> create table test
+  2  (no number primary key,
+  3   name varchar2(10));
+
+Table created.
+
+SQL> select constraint_name,constraint_type from all_constraints
+  2  where table_name in ('test');
+
+no rows selected
+
+SQL> select constraint_name,constraint_type from all_constrints
+  2  where table_name in ('TEST');
+select constraint_name,constraint_type from all_constrints
+                                            *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> select constraint_name,constraint_type from all_constraints
+  2  where table_name in ('TEST');
+
+CONSTRAINT_NAME                                              CO                 
+------------------------------------------------------------ --                 
+SYS_C007003                                                  P                  
+
+SQL> desc point1;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ NO                                                 NUMBER
+ NAME                                               VARCHAR2(10)
+
+SQL> insert into point1 values
+  2  (111, 'kim');
+
+1 row created.
+
+SQL> insert into point1 values
+  2  (111, 'lee');
+
+1 row created.
+
+SQL> select no,name
+  2  from point1;
+
+        NO NAME                                                                 
+---------- --------------------                                                 
+       111 kim                                                                  
+       111 lee                                                                  
+
+SQL> select *
+  2  from point1;
+
+        NO NAME                                                                 
+---------- --------------------                                                 
+       111 kim                                                                  
+       111 lee                                                                  
+
+SQL> insert into point1 values
+  2  (222,'choi');
+
+1 row created.
+
+SQL> insert into point1 values
+  2  (333,'choi');
+
+1 row created.
+
+SQL> select *
+  2  from point1;
+
+        NO NAME                                                                 
+---------- --------------------                                                 
+       111 kim                                                                  
+       111 lee                                                                  
+       222 choi                                                                 
+       333 choi                                                                 
+
+SQL> select *
+  2  from point2;
+
+no rows selected
+
+SQL> insert into point2 values
+  2  (111,'kim');
+
+1 row created.
+
+SQL> insert into point2 values
+  2  (111,'lee');\
+  3  ;
+(111,'lee');\
+           *
+ERROR at line 2:
+ORA-00911: invalid character 
+
+
+SQL> insert into point2 values
+  2  (111,'lee');
+insert into point2 values
+*
+ERROR at line 1:
+ORA-00001: unique constraint (SCOTT.PK_NO) violated 
+
+
+SQL> insert into point2 values
+  2  (111,'lee');
+insert into point2 values
+*
+ERROR at line 1:
+ORA-00001: unique constraint (SCOTT.PK_NO) violated 
+
+
+SQL> insert into point2 values
+  2  (222,'lee');
+
+1 row created.
+
+SQL> insert into point2 values
+  2  (333,'lee');
+
+1 row created.
+
+SQL> select *
+  2  from point2;
+
+        NO NAME                                                                 
+---------- --------------------                                                 
+       111 kim                                                                  
+       222 lee                                                                  
+       333 lee                                                                  
+
+SQL> commit;
+
+Commit complete.
+
+SQL> insert into dept values
+  2  (10,'ACCOUNTING', 'NEW YORK');
+
+1 row created.
+
+SQL> insert into dept values
+  2  (20, 'RESEARCH', ' DALLAS');
+
+1 row created.
+
+SQL> insert into dept values
+  2  (30, 'SALES', 'CHICAGO');
+
+1 row created.
+
+SQL> insert into dept values
+  2  (40, 'OPERATIONS', 'BOSTON');
+
+1 row created.
+
+SQL> select *
+  2  from dept;
+
+    DEPTNO DNAME                          LOC                                   
+---------- ------------------------------ --------------------------            
+        10 ACCOUNTING                     NEW YORK                              
+        20 RESEARCH                        DALLAS                               
+        30 SALES                          CHICAGO                               
+        40 OPERATIONS                     BOSTON                                
+
+SQL> drop table dept;
+drop table dept
+           *
+ERROR at line 1:
+ORA-02449: unique/primary keys in table referenced by foreign keys 
+
+
+SQL> delete dept;
+
+4 rows deleted.
+
+SQL> select *
+  2  from dept;
+
+no rows selected
+
+SQL> insert into dept values
+  2  (10,'ACCOUNTING', 'NEW YORK');
+
+1 row created.
+
+SQL> insert into dept values
+  2  (20, 'RESEARCH', 'DALLAS');
+
+1 row created.
+
+SQL> insert into dept values
+  2  (30, 'SALES', 'CHICAGO');
+
+1 row created.
+
+SQL> insert into dept values
+  2  (40, 'OPERATIONS', 'BOSTON');
+
+1 row created.
+
+SQL> select *
+  2  from dept;
+
+    DEPTNO DNAME                          LOC                                   
+---------- ------------------------------ --------------------------            
+        10 ACCOUNTING                     NEW YORK                              
+        20 RESEARCH                       DALLAS                                
+        30 SALES                          CHICAGO                               
+        40 OPERATIONS                     BOSTON                                
+
+SQL> desc dept;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DEPTNO                                    NOT NULL NUMBER(2)
+ DNAME                                              VARCHAR2(15)
+ LOC                                                VARCHAR2(13)
+
+SQL> desc emp;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ EMPNO                                     NOT NULL NUMBER(4)
+ ENAME                                              VARCHAR2(10)
+ JOB                                                VARCHAR2(9)
+ MGR                                                NUMBER(4)
+ HIREDATE                                           DATE
+ SAL                                                NUMBER(7,2)
+ COMM                                               NUMBER(7,2)
+ DEPTNO                                             NUMBER(2)
+
+SQL> insert into emp values
+  2  (7369, 'SMITH', 'CLERK', 7902, '1980/12/17', 800, null, 20);
+
+1 row created.
+
+SQL> insert into emp values
+  2  (7499, 'ALLEN', 'SALESMAN', 7698, '1981-2-20', 1600, 300, 90);
+insert into emp values
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (SCOTT.FK_DEPT) violated - parent key not found 
+
+
+SQL> insert into emp values
+  2  (7499, 'ALLEN', 'SALESMAN', 7698, '1981-2-20', 1600, 300, 10);
+
+1 row created.
+
+SQL> insert into emp values
+  2  (7521, 'WARD', 'SALESMAN', 7698, '1981-2-22', 1259, 500, 30);
+
+1 row created.
+
+SQL> insert into emp values
+  2  (7566, 'JONES', 'MANAGER', 7839, '1981-4-02', 2975, null, 20);
+
+1 row created.
+
+SQL> insert into emp values
+  2  (7654, 'MARTIN', MANAGER', 7698, '1981-9-28', 1250, 1400, 30);
+ERROR:
+ORA-01756: quoted string not properly terminated 
+
+
+SQL> insert into emp values
+  2  (7654, 'MARTIN', 'MANAGER', 7698, '1981-9-28', 1250, 1400, 30);
+
+1 row created.
+
+SQL> insert into emp values
+  2  (7698, 'BLAKE', 'MANAGER', 7839, '1981-05-01', 2850, null, 30);
+
+1 row created.
+
+SQL> insert into emp values
+  2  (7782, 'CLARK', 'MANAGER', 7839, '1981-06-09', 2450, null, 10);
+
+1 row created.
+
+SQL> insert into emp values
+  2  (7788, 'SCOTT', 'ANALYST', 7566, '1987-04-19;, 3000, null, 20);
+ERROR:
+ORA-01756: quoted string not properly terminated 
+
+
+SQL> insert into emp values
+  2  (7788, 'SCOTT', 'ANALYST', 7566, '1987-04-19', 3000, null, 20);
+
+1 row created.
+
+SQL> insert into emp values
+  2  (7839, 'KING', 'PRESIDENT', null, '1981-11-17', 5000, null, 10);
+
+1 row created.
+
+SQL> insert into emp values
+  2  (7844, 'TUENER', 'SALESMAN', 7698, '1981-09-08', 1599, 0, 30);
+
+1 row created.
+
+SQL> select *
+  2  from emp;
+
+     EMPNO ENAME                JOB                       MGR HIREDATE          
+---------- -------------------- ------------------ ---------- --------          
+       SAL       COMM     DEPTNO                                                
+---------- ---------- ----------                                                
+      7369 SMITH                CLERK                    7902 80/12/17          
+       800                    20                                                
+                                                                                
+      7499 ALLEN                SALESMAN                 7698 81/02/20          
+      1600        300         10                                                
+                                                                                
+      7521 WARD                 SALESMAN                 7698 81/02/22          
+      1259        500         30                                                
+                                                                                
+
+     EMPNO ENAME                JOB                       MGR HIREDATE          
+---------- -------------------- ------------------ ---------- --------          
+       SAL       COMM     DEPTNO                                                
+---------- ---------- ----------                                                
+      7566 JONES                MANAGER                  7839 81/04/02          
+      2975                    20                                                
+                                                                                
+      7654 MARTIN               MANAGER                  7698 81/09/28          
+      1250       1400         30                                                
+                                                                                
+      7698 BLAKE                MANAGER                  7839 81/05/01          
+      2850                    30                                                
+                                                                                
+
+     EMPNO ENAME                JOB                       MGR HIREDATE          
+---------- -------------------- ------------------ ---------- --------          
+       SAL       COMM     DEPTNO                                                
+---------- ---------- ----------                                                
+      7782 CLARK                MANAGER                  7839 81/06/09          
+      2450                    10                                                
+                                                                                
+      7788 SCOTT                ANALYST                  7566 87/04/19          
+      3000                    20                                                
+                                                                                
+      7839 KING                 PRESIDENT                     81/11/17          
+      5000                    10                                                
+                                                                                
+
+     EMPNO ENAME                JOB                       MGR HIREDATE          
+---------- -------------------- ------------------ ---------- --------          
+       SAL       COMM     DEPTNO                                                
+---------- ---------- ----------                                                
+      7844 TUENER               SALESMAN                 7698 81/09/08          
+      1599          0         30                                                
+                                                                                
+
+10 rows selected.
+
+SQL> 
+SQL> desc emp;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ EMPNO                                     NOT NULL NUMBER(4)
+ ENAME                                              VARCHAR2(10)
+ JOB                                                VARCHAR2(9)
+ MGR                                                NUMBER(4)
+ HIREDATE                                           DATE
+ SAL                                                NUMBER(7,2)
+ COMM                                               NUMBER(7,2)
+ DEPTNO                                             NUMBER(2)
+
+SQL> 
+SQL> commit;
+
+Commit complete.
+
+SQL> desc emp;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ EMPNO                                     NOT NULL NUMBER(4)
+ ENAME                                              VARCHAR2(10)
+ JOB                                                VARCHAR2(9)
+ MGR                                                NUMBER(4)
+ HIREDATE                                           DATE
+ SAL                                                NUMBER(7,2)
+ COMM                                               NUMBER(7,2)
+ DEPTNO                                             NUMBER(2)
+
+SQL> select *
+  2  from emp;
+
+     EMPNO ENAME                JOB                       MGR HIREDATE          
+---------- -------------------- ------------------ ---------- --------          
+       SAL       COMM     DEPTNO                                                
+---------- ---------- ----------                                                
+      7369 SMITH                CLERK                    7902 80/12/17          
+       800                    20                                                
+                                                                                
+      7499 ALLEN                SALESMAN                 7698 81/02/20          
+      1600        300         10                                                
+                                                                                
+      7521 WARD                 SALESMAN                 7698 81/02/22          
+      1259        500         30                                                
+                                                                                
+
+     EMPNO ENAME                JOB                       MGR HIREDATE          
+---------- -------------------- ------------------ ---------- --------          
+       SAL       COMM     DEPTNO                                                
+---------- ---------- ----------                                                
+      7566 JONES                MANAGER                  7839 81/04/02          
+      2975                    20                                                
+                                                                                
+      7654 MARTIN               MANAGER                  7698 81/09/28          
+      1250       1400         30                                                
+                                                                                
+      7698 BLAKE                MANAGER                  7839 81/05/01          
+      2850                    30                                                
+                                                                                
+
+     EMPNO ENAME                JOB                       MGR HIREDATE          
+---------- -------------------- ------------------ ---------- --------          
+       SAL       COMM     DEPTNO                                                
+---------- ---------- ----------                                                
+      7782 CLARK                MANAGER                  7839 81/06/09          
+      2450                    10                                                
+                                                                                
+      7788 SCOTT                ANALYST                  7566 87/04/19          
+      3000                    20                                                
+                                                                                
+      7839 KING                 PRESIDENT                     81/11/17          
+      5000                    10                                                
+                                                                                
+
+     EMPNO ENAME                JOB                       MGR HIREDATE          
+---------- -------------------- ------------------ ---------- --------          
+       SAL       COMM     DEPTNO                                                
+---------- ---------- ----------                                                
+      7844 TUENER               SALESMAN                 7698 81/09/08          
+      1599          0         30                                                
+                                                                                
+
+10 rows selected.
+
+SQL> spool off
