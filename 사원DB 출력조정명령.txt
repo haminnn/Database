@@ -1,0 +1,37 @@
+-- 출력 조정 명령(column 이용, 문자는 a 숫자는 9로 표현)
+--type이 number(2)이면 col 컬럼명 format 99
+--varchar2(15)이면 format a15
+--오라클을 실행하는중에만 출력이 조정되고 오라클을 종료한 후 다시 출력시키면 초기화되어 있다.
+--화면내의 서식만 바꿔주는거지 실제 메모리의 사이즈를 조정하는게 아니다.
+
+set linesize 250;
+set pagesize 30;
+
+--dept
+col deptno format 99
+col dname format a13
+col loc format a10
+
+
+--emp
+col empno format 9999
+col ename format a8
+col job format a9
+col mgr format 9999
+col hiredate format a10
+col sal format 999999
+col comm format 999999
+
+
+--salgrade
+col grade format 9999
+col losal format 9999
+col hisal format 9999
+
+--student
+col no format 999
+col name format a10
+col dno format 999
+
+--department
+col dname format a5
